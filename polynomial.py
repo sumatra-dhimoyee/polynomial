@@ -40,6 +40,21 @@ class Mul:
             return "( " + repr(self.p1) + " ) * " + repr(self.p2)
         if isinstance(self.p2, Add):
             return repr(self.p1) + " * ( " + repr(self.p2) + " )"
+
+        if isinstance(self.p1, Sub):
+            if isinstance(self.p2, Sub):
+                 return "( " + repr(self.p1) + " ) * ( " + repr(self.p2) + " )"
+            return "( " + repr(self.p1) + " ) * " + repr(self.p2)
+        if isinstance(self.p2, Sub):
+            return repr(self.p1) + " * ( " + repr(self.p2) + " )"
+
+        if isinstance(self.p1, Div):
+            if isinstance(self.p2, Div):
+                 return "( " + repr(self.p1) + " ) * ( " + repr(self.p2) + " )"
+            return "( " + repr(self.p1) + " ) * " + repr(self.p2)
+        if isinstance(self.p2, Div):
+            return repr(self.p1) + " * ( " + repr(self.p2) + " )"
+
         return repr(self.p1) + " * " + repr(self.p2)
     
 class Div:
@@ -54,6 +69,21 @@ class Div:
             return "( " + repr(self.p1) + " ) / " + repr(self.p2)
         if isinstance(self.p2, Add):
             return repr(self.p1) + " / ( " + repr(self.p2) + " )"
+
+        if isinstance(self.p1, Sub):
+            if isinstance(self.p2, Sub):
+                 return "( " + repr(self.p1) + " ) / ( " + repr(self.p2) + " )"
+            return "( " + repr(self.p1) + " ) / " + repr(self.p2)
+        if isinstance(self.p2, Sub):
+            return repr(self.p1) + " / ( " + repr(self.p2) + " )"
+
+        if isinstance(self.p1, Mul):
+            if isinstance(self.p2, Mul):
+                 return "( " + repr(self.p1) + " ) / ( " + repr(self.p2) + " )"
+            return "( " + repr(self.p1) + " ) / " + repr(self.p2)
+        if isinstance(self.p2, Mul):
+            return repr(self.p1) + " / ( " + repr(self.p2) + " )"
+
         return repr(self.p1) + " / " + repr(self.p2)
 
 
@@ -64,6 +94,14 @@ print(poly)
 poly1= Add(Add(Add(Mul(X(), X()), Div(Int(1), X())), Mul(Mul(X(), X()), X())),Sub(Mul(Int(3), X()), Int(2)))
 print(poly1)
 
+#1/(x^2)+2/(x^3)-x^3
 poly2= Sub(Add(Div(Int(1), Mul(X(), X())), Div(Int(2), Mul(X(), Mul(X(), X())))), Mul(X(), Mul(X(), X())))
 print(poly2)
 
+#x^3/x +1
+poly3= Add(Div(Mul(Mul(X(), X()), X()), X()), Int(1))
+print(poly3)
+
+#x^3/x^2 +16
+poly4= Add(Div(Mul(Mul(X(), X()), X()), Mul(X(), X())), Int(16))
+print(poly4)
